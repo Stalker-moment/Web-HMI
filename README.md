@@ -7,5 +7,6 @@ Only run at localhost for display source picture of HMI
 ## ⚠️ Information ⚠️
 - Not for normal device, only for HMI
 
-
+## DEMO
+- [here](https://b-arcade-tractor-greatest.trycloudflare.com/)
 

@@ -361,7 +361,7 @@ app.get("/image/:imageName/:txt/:value", (req, res) => {
         </head>
         <body>
           <div class="canvas">
-          <marquee class="running"> ${value} </marquee>
+          <marquee style='' class="running"> ${value} </marquee>
             <img class="produk-mes" src="/${imageName}" alt="${value}">
             <!--<h3 id="currentTime">TIME ZONE</h3>-->
           </div>
@@ -378,6 +378,108 @@ app.get("/image/:imageName/:txt/:value", (req, res) => {
     console.log(err)
   }
 });
+
+app.get("/imagefix/:optional/:opsi/", (req, res) => {
+  try {
+  console.log(req.params.optional)
+  const optionalitation = req.params.optional; //cover & front fuse
+  const optionalitation2 = req.params.opsi; //only rear fuse
+  if(optionalitation.toString() === '510' ){ //front cover red
+    var imageName = 'front_cover_red.png';
+  } else if(optionalitation.toString() === '130') { //front fuse
+    var imageName = 'onefuse.png'
+  } else if(optionalitation.toString() === '410') { //front cover blue
+    var imageName = 'front_cover_blue.png';
+  } else if(optionalitation.toString() === '310') { //front cover grey
+    var imageName = 'front_cover_gray.png';
+  } else if(optionalitation.toString() === '114') { //back cover red
+    var imageName = 'back_cover_red.png'
+  } else if(optionalitation.toString() === '113') { //back cover blue
+    var imageName = 'back_cover_blue.png'
+  } else if(optionalitation.toString() === '112') { //back cover grey
+    var imageName = 'back_cover_gray.png'
+  } else {
+    var imageName = optionalitation;
+  }
+
+  console.log(imageName)
+
+  const value = path.parse(imageName).name;
+
+    var imageHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>${value}</title>
+      <style>
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          width: 100%;
+          margin: 0;
+
+        }
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+        .name{
+          font-size: 25px
+        }
+        .canvas {
+          display: flex;
+          position: relative;
+          left: 180px;
+          right: 10px;
+          top: 120px;
+          bottom: 30px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 100%; 
+        }
+        .card {
+          height: 100%;
+          width: 100%; 
+          padding: 20px;
+          border-radius: 20px;
+          background: #f0f0f0;
+          box-shadow: 10px 10px 20px #d1d1d1, -10px -10px 20px #ffffff;
+          transition: all 0.3s ease-in-out;
+          margin-top: 0;
+          margin-bottom: 40px;
+          text-align: center;
+        }
+        .produk-mes{
+          border-radius: 50%;
+          width: 60%;
+          height: 60%;
+          z-index: -100;
+          position: relative;
+          bottom: 50px
+        }
+      </style>
+    </head>
+    <body>
+      <div class="canvas">
+        <div style="display:none" class="card">
+        
+          <h3 style="display:none" class="name">${value}</h3>
+        </div>
+        <img class="produk-mes" src="/${imageName}" alt="${value}">
+      </div>
+    </body>
+    </html>
+    
+    `;
+    res.send(imageHtml);
+  } catch (err){
+    console.log(err)
+  }
+} );
 
 app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
